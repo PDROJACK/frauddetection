@@ -1,10 +1,8 @@
 package com.airtel.frauddetection.filter;
 
-import java.io.FileNotFoundException;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,43 +11,34 @@ import java.util.Map;
 
 import org.json.simple.JSONArray;
 import org.json.simple.parser.*;
+import org.springframework.util.ResourceUtils;
 
 public class Filter {
     public static void main(String[] args) throws IOException {
     }
-    
 
-    public static List<Map<String, Object>> getFilteredData(ResultSet rs) throws SQLException {
-        ResultSetMetaData md = rs.getMetaData();
-        int columns = md.getColumnCount();
-        List<Map<String, Object>> rows = new ArrayList<Map<String, Object>>();
+    public static List<Map<String, Object>> getFilteredData(List<Map<String, Object>> data) throws SQLException {
         JSONArray json = new JSONArray();
-        List<String> list=new ArrayList<String>();
-        Object obj;
+        List<String> filterArray = new ArrayList<String>();
+        int columns = data.get(1).size();
+        List<Map<String, Object>> dataList = new ArrayList<Map<String, Object>>();
         try {
-            obj = new JSONParser().parse(new FileReader(
-                "G:\\Eclipse\\frauddetection\\src\\main\\java\\com\\airtel\\frauddetection\\filter\\utils\\filter.json"));
-            json = (JSONArray) obj;  
-            list = json;
+            File file = ResourceUtils.getFile("classpath:static/filter.json");
+            json = (JSONArray) new JSONParser().parse(new FileReader (file));
+            filterArray = json;
         } catch (ParseException | IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        while (rs.next()){
-            Map<String, Object> row = new HashMap<String, Object>(columns);
-            //Looping over the items
-            for(int i = 1; i <= columns; ++i){
-                for(String o: list){
-                   if(md.getColumnLabel(i).equals(o)){
-                       row.put(md.getColumnLabel(i),rs.getObject(i));
-                    }
-                   // System.out.println((String)json.get(j));
-                }
-            } 
-            //Map<String, Object> result = row.entrySet().stream().filter(map->map.getKey().equals("customer_no")).collect(Collectors.toMap(map->map.getKey(),map->map.getValue()));
-            rows.add(row);
-        }
-        return rows;
-    } 
 
+        for(int j=0;j<data.size();j++){
+            Map<String, Object> dataRow = new HashMap<String, Object>(columns);
+            for(String filterColumn: filterArray){
+                    if(data.get(j).containsKey(filterColumn)){
+                        dataRow.put(filterColumn, data.get(j).get(filterColumn));
+                    }
+                }
+            dataList.add(dataRow);
+        }
+        return dataList;
+    } 
 }
