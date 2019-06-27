@@ -1,17 +1,11 @@
 package com.airtel.frauddetection.filter;
 
+import com.airtel.frauddetection.filter.utils.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import org.json.simple.JSONArray;
-import org.json.simple.parser.*;
-import org.springframework.util.ResourceUtils;
-import com.airtel.frauddetection.filter.utils.*;
 
 public class Filter {
     static List<String> filterArray = DataReader.getFilteredArray();
