@@ -6,7 +6,6 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -22,8 +21,6 @@ public class GetResultSet {
         Connection conn = DriverManager.getConnection(url, username, password);
         return conn;
     }
-
-
     public static void main(String[] args) {
         Connection connection = null;
         Statement statement= null;
@@ -45,9 +42,9 @@ public class GetResultSet {
                 unfilteredData.add(row);
             }
             System.out.println(Filter.getFilteredData(unfilteredData));
-            } catch (Exception e) {
+        } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
-            }
         }
+    }
 }

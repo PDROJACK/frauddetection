@@ -1,0 +1,8 @@
+[
+    "customer_no",
+    "amount",
+    "user_type",
+    "recharge_type",
+    "timestamp",
+    "retailer_id"
+]
