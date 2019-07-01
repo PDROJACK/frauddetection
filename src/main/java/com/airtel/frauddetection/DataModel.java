@@ -1,17 +1,22 @@
-package com.airtel.frauddetection;
+package com.airtel.FraudDetectionSystem.Model;
 
-import org.hibernate.annotations.ParamDef;
-import org.hibernate.annotations.Filter;
-import org.hibernate.annotations.FilterDef;
+import java.sql.Timestamp;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import javax.persistence.*;
-
 @Entity
-@Table(name="transactions")
+@Table(name="txn")
 @EntityListeners(AuditingEntityListener.class)
 public class DataModel {
-    @Id
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private int txnId;
 
@@ -35,70 +40,89 @@ public class DataModel {
 
     @Column(name = "retailer_id")
     private int retailer_id;
-
-    public int getRetailer_id(){
-        return retailer_id;
-    }
-
-    public void setRetailer_id(int retailer_id){
-        this.retailer_id = retailer_id;
-    }
-
-    public int getTxnId() {
-        return txnId;
-    }
-
-    public long getCustomer_no(){
-        return customer_no;
-    }
-
-    public void setCustomer_no(long customer_no){
-        this.customer_no = customer_no;
-    }
-
-    public int getAmount(){
-        return amount;
-    }
-
-    public void setAmount(int amount){
-        this.amount = amount;
-    }
     
-    public String getUser_type(){
-        return user_type;
-    }
+    @Column(name = "timestamp")
+    private Timestamp timestamp;
 
-    public void setUser_Type(String user_type){
-        this.user_type = user_type;
-    }
+	public int getTxnId() {
+		return txnId;
+	}
 
-    public String getRetailer_detail(){
-        return retailer_detail;
-    }
+	public void setTxnId(int txnId) {
+		this.txnId = txnId;
+	}
 
-    public void setRetailer_detail(String retailer_detail){
-        this.retailer_detail = retailer_detail;
-    }
+	public long getCustomer_no() {
+		return customer_no;
+	}
 
-    public int getMpin(){
-        return mpin;
-    }
+	public void setCustomer_no(long customer_no) {
+		this.customer_no = customer_no;
+	}
 
-    public void setMpin(int mpin){
-        this.mpin = mpin;
-    }
+	public int getAmount() {
+		return amount;
+	}
 
-    public String getRecharge_type(){
-        return recharge_type;
-    }
+	public void setAmount(int amount) {
+		this.amount = amount;
+	}
 
-    public void setRecharge_type(String recharge_type){
-        this.recharge_type = recharge_type;
-    }
+	public String getUser_type() {
+		return user_type;
+	}
 
-    @Override
-    public String toString() {
-            return "Transaction [retailerId=" + retailer_id + ", customer_no=" + customer_no + ", retailer_detail ="+ retailer_detail + "]";
-    }
+	public void setUser_type(String user_type) {
+		this.user_type = user_type;
+	}
+
+	public String getRetailer_detail() {
+		return retailer_detail;
+	}
+
+	public void setRetailer_detail(String retailer_detail) {
+		this.retailer_detail = retailer_detail;
+	}
+
+	public int getMpin() {
+		return mpin;
+	}
+
+	public void setMpin(int mpin) {
+		this.mpin = mpin;
+	}
+
+	public String getRecharge_type() {
+		return recharge_type;
+	}
+
+	public void setRecharge_type(String recharge_type) {
+		this.recharge_type = recharge_type;
+	}
+
+	public int getRetailer_id() {
+		return retailer_id;
+	}
+
+	public void setRetailer_id(int retailer_id) {
+		this.retailer_id = retailer_id;
+	}
+
+	public Timestamp getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(Timestamp timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	@Override
+	public String toString() {
+		return "DataModel [txnId=" + txnId + ", customer_no=" + customer_no + ", amount=" + amount + ", user_type="
+				+ user_type + ", retailer_detail=" + retailer_detail + ", mpin=" + mpin + ", recharge_type="
+				+ recharge_type + ", retailer_id=" + retailer_id + ", timestamp=" + timestamp + "]";
+	}
+
+    
 
 }
