@@ -1,8 +1,26 @@
 [
-    "customer_no",
-    "amount",
-    "user_type",
-    "recharge_type",
-    "timestamp",
-    "retailer_id"
+    { 
+        "columnName": "customer_no",
+        "type"       : "long"
+    },
+    {
+        "columnName":"amount",
+        "type"       : "int"
+    },
+    {
+        "columnName":"user_type",
+        "type"       : "string" 
+    },
+    {
+        "columnName":"recharge_type",
+        "type"       : "string"
+    },
+    {
+        "columnName":"timestamp",
+        "type"       : "date"
+    },
+    {
+        "columnName":"retailer_id",
+        "type"       : "int"
+    }
 ]
