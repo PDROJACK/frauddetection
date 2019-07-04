@@ -1,7 +1,7 @@
 package com.airtel.frauddetection;
 
 import com.airtel.frauddetection.filter.Filter;
-import com.airtel.frauddetection.model.Pair;
+import com.airtel.frauddetection.model.DataPojo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -28,7 +28,7 @@ public class GetResultSet {
         Statement statement= null;
         ResultSet response = null;
         List<Map<String, Object>> unfilteredData = new ArrayList<Map<String, Object>>();
-        List<Map<String, Pair>> filteredData = new ArrayList<Map<String, Pair>>(); 
+        List<Map<String, DataPojo<?>>> filteredData = new ArrayList<Map<String, DataPojo<?>>>(); 
         try {
             connection = getConnection();
             String query = "SELECT * from transactions";
@@ -44,7 +44,7 @@ public class GetResultSet {
                 }
                 unfilteredData.add(row);
             }
-            System.out.println(Filter.getFilteredData(unfilteredData).get(1).get("timestamp").getType());
+            System.out.println(Filter.getFilteredData(unfilteredData));//get().get("timestamp").getValue());
         } catch (Exception e) {
                     e.printStackTrace();
                     System.exit(1);
