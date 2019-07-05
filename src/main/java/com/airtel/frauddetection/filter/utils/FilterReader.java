@@ -11,6 +11,7 @@ import org.springframework.util.ResourceUtils;
 
 public class FilterReader {
     static ObjectType[] objects;
+    static String[] expression;
     public static ObjectType[] getFilteredArray(){
         try {
             Gson gson = new Gson();
@@ -22,5 +23,17 @@ public class FilterReader {
             //TODO: handle exception
         }
         return objects;
+    }
+
+    public static String[] getExpression(){
+        try {
+            Gson gson = new Gson();
+            File file = ResourceUtils.getFile("classpath:static/expression.json");
+            JsonReader reader = new JsonReader(new FileReader(file));
+            expression = gson.fromJson(reader, String[].class);
+        } catch (Exception e) {
+            //TODO: handle exception
+        }
+        return expression;
     }
 }
