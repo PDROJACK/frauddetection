@@ -1,49 +1,41 @@
 package com.airtel.frauddetection.services;
 
 import java.lang.reflect.InvocationTargetException;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.airtel.frauddetection.filter.utils.FilterReader;
 import com.airtel.frauddetection.model.DataPojo;
+import com.airtel.frauddetection.model.RetailerModel;
 
 import org.codehaus.janino.ExpressionEvaluator;
 import org.codehaus.janino.Parser.ParseException;
-import org.apache.commons.text.StringSubstitutor;
 import org.codehaus.janino.CompileException;
 import org.codehaus.janino.Scanner.ScanException;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
 
 /**
  * Computation
  */
-
 public class Computation {
     static private String[] expression = FilterReader.getExpression();
     
-    public static void expressionEvaluator(List<Map<String, DataPojo<?>>> filteredData, String label)
+    public static void expressionEvaluator(List<Map<String, DataPojo<?>>> filteredData, List<RetailerModel> historicalData)
     throws CompileException, ParseException, ScanException, InvocationTargetException {
         
+        Class cls = filteredData.get(1).get("amount").getValue().getClass();
         ExpressionEvaluator ee = new ExpressionEvaluator();
-        Class cls = filteredData.get(1).get(label).getValue().getClass();
-        Map labelMap = new HashMap();
-        labelMap.put("label",label);
-        StringSubstitutor sub = new StringSubstitutor(labelMap);
-        
-        String templateString = expression[0];
-        String expression = sub.replace(templateString);
-        
-        ee.setParameters(new String[]{label}, new Class[]{cls});
-                
-        ee.setExpressionType(cls);
-                
-        ee.cook(expression);
+        ee.setParameters(new String[]{"amount","daily_avg"}, new Class[]{cls,Integer.class});
+        ee.setExpressionType(Integer.class);
+        ee.cook(expression[0]);
                 
         for(Map<String,DataPojo<?>> data : filteredData ){
-                Object value = data.get(label).getValue();
-                System.out.println(ee.evaluate(new Object[]{ value }));
+            for(RetailerModel retailer : historicalData) {
+                if(retailer.getRetailer_id()==(Integer) data.get("retailer_id").getValue()){
+                    Object value = (Integer) data.get("amount").getValue();
+                    Integer daily_avg = (Integer) retailer.getDaily_avg();
+                    System.out.println(ee.evaluate(new Object[]{ value, daily_avg }));
+                    }
+                }
             }
         }
     }
