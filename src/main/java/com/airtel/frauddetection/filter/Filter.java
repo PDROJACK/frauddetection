@@ -13,24 +13,22 @@ import java.util.Map;
 
 public class Filter {
     private static ObjectType[] filterArray = FilterReader.getFilteredArray();
-    public static List<Map<String,DataPojo<?>>> getFilteredData(List<Map<String, Object>> data) {
-        int columns = data.get(1).size();
-        List<Map<String, DataPojo<?>>> dataList = new ArrayList<Map<String,DataPojo<?>>>();
-        for(Map<String, Object> dataMap : data) {
+    public static Map<String,DataPojo<?>> getFilteredData(Map<String, Object> data) {
+        int columns = data.size();
             Map<String,DataPojo<?>> dataRow = new HashMap<String,DataPojo<?>>(columns);
             for(ObjectType filterColumn: filterArray){
                 String columnName = filterColumn.getColumnName();
                 String type = filterColumn.getType();
                 DataPojo<?> p1 ;
-                Object value = dataMap.get(columnName);
+                Object value = data.get(columnName);
                 if(type == "string"){
                     p1 = new ValueModel<String>((String)value);
                     dataRow.put(columnName, p1);
                 } else if (type == "int") {
-                    p1 = new ValueModel<Long>((Long)value);
+                    p1 = new ValueModel<Integer>((Integer)value);
                     dataRow.put(columnName,p1);
                 } else if (type == "long") {
-                    p1 = new ValueModel<Integer>((Integer)value);
+                    p1 = new ValueModel<Long>((Long)value);
                     dataRow.put(columnName,p1);
                 } else if (type == "date") {
                     p1 = new ValueModel<Date>((Date)value);
@@ -43,8 +41,6 @@ public class Filter {
                     dataRow.put(columnName,p1);
                 }
             }
-            dataList.add(dataRow);
-        }
-        return dataList;
+            return dataRow;
     } 
 }

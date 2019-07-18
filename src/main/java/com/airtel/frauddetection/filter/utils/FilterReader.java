@@ -25,10 +25,10 @@ public class FilterReader {
         return objects;
     }
 
-    public static String[] getExpression(){
+    public static String[] getExpression(String path){
         try {
             Gson gson = new Gson();
-            File file = ResourceUtils.getFile("classpath:static/expression.json");
+            File file = ResourceUtils.getFile(path);
             JsonReader reader = new JsonReader(new FileReader(file));
             expression = gson.fromJson(reader, String[].class);
         } catch (Exception e) {

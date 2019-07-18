@@ -1,3 +1,4 @@
 [
-    "amount = amount + amount/daily_avg"
+    "0.4*ema + (1-0.4)*amount",
+    "Math.sqrt(0.4*ems*ems + (1-0.4)*(amount-ema)*(amount-ema))"
 ]

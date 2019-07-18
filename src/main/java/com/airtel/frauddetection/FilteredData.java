@@ -2,15 +2,14 @@ package com.airtel.frauddetection;
 
 import com.airtel.frauddetection.filter.Filter;
 import com.airtel.frauddetection.model.DataPojo;
+import com.airtel.frauddetection.services.Computation;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class FilteredData {
@@ -21,12 +20,11 @@ public class FilteredData {
         Connection conn = DriverManager.getConnection(url, username, password);
         return conn;
     }
-    public static List<Map<String, DataPojo<?>>> filteredData() {
+    public static void main(String[] args) {
+
         Connection connection = null;
         Statement statement= null;
-        ResultSet response = null;
-        List<Map<String, Object>> unfilteredData = new ArrayList<Map<String, Object>>();
-        List<Map<String, DataPojo<?>>> filteredData = new ArrayList<Map<String, DataPojo<?>>>(); 
+        ResultSet response = null; 
         try {
             connection = getConnection();
             String query = "SELECT * from transactions";
@@ -40,14 +38,14 @@ public class FilteredData {
                 for(int i = 1; i <= columns; ++i){
                     row.put(metaData.getColumnLabel(i),response.getObject(i));
                 }
-                unfilteredData.add(row);
+                Map<String,DataPojo<?>> filteredData = Filter.getFilteredData(row);
+                Computation.thresholdCheck(filteredData);
+                //AnomalyDetector.thresholdCheck(daily_avg);
+                //System.out.println(filteredData);
             }
-            filteredData = (Filter.getFilteredData(unfilteredData)); //get().get("timestamp").getValue());
-            // Computation.expressionEvaluator(filteredData);           
         } catch (Exception e) {
                 e.printStackTrace();
                 System.exit(1);
         }
-        return filteredData;
     }
 }
