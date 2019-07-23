@@ -12,8 +12,7 @@ public class ComputedPojo {
         this.id = id;
         this.value = value;
     }
-
-
+    
     /**
      * @return the id
      */

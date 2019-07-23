@@ -21,7 +21,6 @@ public class FilteredData {
         return conn;
     }
     public static void main(String[] args) {
-
         Connection connection = null;
         Statement statement= null;
         ResultSet response = null; 
@@ -34,14 +33,11 @@ public class FilteredData {
             int columns = metaData.getColumnCount();
             while(response.next()){
                 Map<String, Object> row = new HashMap<String, Object>(columns);
-                //Looping over the items
                 for(int i = 1; i <= columns; ++i){
                     row.put(metaData.getColumnLabel(i),response.getObject(i));
                 }
                 Map<String,DataPojo<?>> filteredData = Filter.getFilteredData(row);
                 Computation.thresholdCheck(filteredData);
-                //AnomalyDetector.thresholdCheck(daily_avg);
-                //System.out.println(filteredData);
             }
         } catch (Exception e) {
                 e.printStackTrace();

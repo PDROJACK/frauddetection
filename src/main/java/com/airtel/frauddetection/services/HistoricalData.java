@@ -14,11 +14,6 @@ import com.mongodb.client.model.Filters;
 import org.bson.Document;
 import org.springframework.data.mongodb.core.MongoTemplate;
 
-
-
-/**
- * MongoTest
- */
 public class HistoricalData {
     
     static MongoClient mongo = new MongoClient("localhost", 27017);

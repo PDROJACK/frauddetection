@@ -1,4 +1,8 @@
 [
+    {
+        "columnName":"txnId",
+        "type": "int"
+    },
     { 
         "columnName": "customer_no",
         "type"       : "long"

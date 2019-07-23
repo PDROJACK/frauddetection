@@ -1,0 +1,5 @@
+2019-07-19 11:42:14 WARN  Computation:44 - Anomaly detected!! Associated Id:1921747
+2019-07-19 11:50:04 WARN  Computation:45 - Anomaly detected!! Associated RetailerId:1127162TxnId:3
+2019-07-19 11:50:04 WARN  Computation:45 - Anomaly detected!! Associated RetailerId:2968049TxnId:4
+2019-07-19 11:50:04 WARN  Computation:45 - Anomaly detected!! Associated RetailerId:1980420TxnId:5
+2019-07-19 11:55:44 WARN  Computation:45 - Anomaly detected | Associated RetailerId:1374354 | TxnId:2
